@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SocialTextView">
+        <attr name="android:text"/>
+        <attr name="normalTextColor"/>
+        <attr name="underLine"/>
+        <attr name="hashtagColor"/>
+        <attr name="mentionColor"/>
+        <attr name="phoneColor"/>
+        <attr name="urlColor"/>
+        <attr name="emailColor"/>
+        <attr name="selectedColor"/>
+        <attr name="linkType" format="enum">
+            <enum name="hashtag" value="2"/>
+            <enum name="mention" value="4"/>
+            <enum name="url" value="8"/>
+            <enum name="email" value="16"/>
+            <enum name="phone" value="32"/>
+        </attr>
+    </declare-styleable>
+</resources>
