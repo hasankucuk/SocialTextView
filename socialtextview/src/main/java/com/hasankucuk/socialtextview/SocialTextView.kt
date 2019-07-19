@@ -132,6 +132,26 @@ class SocialTextView(context: Context, attrs: AttributeSet? = null, def: Int = 0
         val items = HashSet<LinkItem>()
         var linkedText: String = text
 
+
+        if (linkedType == HASHTAG) {
+            linkedText = collectLinkItems(HASHTAG.value, items, hashtagPattern.matcher(linkedText), text)
+        }
+        if (linkedType == MENTION) {
+            linkedText = collectLinkItems(MENTION.value, items, mentionPattern!!.matcher(linkedText), text)
+        }
+        if (linkedType == URL) {
+            linkedText = collectLinkItems(URL.value, items, linkPattern!!.matcher(linkedText), text)
+        }
+        if (linkedType == EMAIL) {
+            linkedText = collectLinkItems(EMAIL.value, items, Patterns.EMAIL_ADDRESS.matcher(linkedText), text)
+        }
+  if (linkedType == PHONE) {
+      linkedText = collectLinkItems(PHONE.value, items, Patterns.PHONE.matcher(linkedText), text)
+        }
+
+        collectLinkItems(TEXT.value, items, standartText!!.matcher(linkedText), text)
+
+        /*
         when (linkedType) {
 
             HASHTAG -> {
@@ -162,6 +182,7 @@ class SocialTextView(context: Context, attrs: AttributeSet? = null, def: Int = 0
             }
         }
 
+         */
         return items
     }
 
