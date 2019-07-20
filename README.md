@@ -89,7 +89,7 @@ dependencies {
 
 Attribute | Type | Summary
 :---: | :---: | ---
-`app:linkType` | `int` | hashtag|mention|url|phone|email 
+`app:linkType` | `int` | "hashtag|mention|url|phone|email"
 `app:underLine` | `int` | true or false
 `app:normalTextColor` | `int` | Sets the text color of a normal text color.
 `app:hashtagColor` | `color` | Sets the text color of a hashtag link in the text.
