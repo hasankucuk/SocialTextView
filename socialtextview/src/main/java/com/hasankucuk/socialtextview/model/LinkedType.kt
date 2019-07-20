@@ -1,6 +1,5 @@
 package com.hasankucuk.socialtextview.model
 
-import androidx.annotation.IntDef
 
 enum class LinkedType(val value: Int) {
     TEXT(0),

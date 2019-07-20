@@ -217,6 +217,7 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
                 if (linkedHashtag.contains(matchedText)) {
                     items.add(LinkItem(matchedText, matcherStart, matcher.end(), mode)
                     )
+
                 }
 
             } else if (mode == MENTION.value && linkedMentions.isNotEmpty()) {
@@ -224,12 +225,14 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
                     items.add(
                             LinkItem(matchedText, matcherStart, matcher.end(), mode)
                     )
+
                 }
 
             } else {
                 items.add(
                         LinkItem(matchedText, matcherStart, matcher.end(), mode)
                 )
+
             }
 
             text = text.replace(matchedText, addSpace(matchedText.length - 1))

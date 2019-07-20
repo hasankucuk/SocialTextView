@@ -2,6 +2,7 @@ package com.hasankucuk.socialtextviewsample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.hasankucuk.socialtextview.SocialTextView
 import com.hasankucuk.socialtextview.model.LinkedType
@@ -16,12 +17,13 @@ class MainActivity : AppCompatActivity() {
 
 
         val mentions: MutableList<String> = arrayListOf()
-        mentions.add("@hasann.kucuk")
+        mentions.add("@hasankucuk")
         socialTextView.setLinkedMention(mentions)
 
         val hashtags: MutableList<String> = arrayListOf()
-        hashtags.add("developed")
+        hashtags.add("#developed")
         socialTextView.setLinkedHashtag(hashtags)
+¬
 
         socialTextView.setLinkClickListener(object : SocialTextView.LinkClickListener {
             override fun onLinkClicked(linkType: LinkedType, matchedText: String) {
