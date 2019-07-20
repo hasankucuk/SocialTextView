@@ -1,16 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.hasankucuk.socialtextview.SocialTextView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Bu projece @hasankucuk tarafından #opensource olarak geliştirilmiştir."
-        app:linkType="mention" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:paddingStart="15dp"
+        android:text="*Example that links the values added with 'setLinkedMention' and 'setLinkedHashtag'."
+        android:textColor="@android:color/black"
+        android:textStyle="italic" />
+
+    <com.hasankucuk.socialtextview.SocialTextView
+        android:id="@+id/socialTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="This project was #developed by @hasankucuk as #opensource. \n
+hasann.kucuk@yandex.ru \n
+https://medium.com/@hasann.kucuk \n
+hasan@gmail.com \n
++1 123456789"
+        app:emailColor="#FF9E80"
+        app:hashtagColor="#82B1FF"
+        app:linkType="mention|hashtag|phone|email|url"
+        app:mentionColor="#BCBCCF"
+        app:normalTextColor="#18181F"
+        app:phoneColor="#03A9F4"
+        app:urlColor="#8BC34A" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:text="Linked example by selected 'linkType' "
+        android:textColor="@android:color/black"
+        android:textStyle="italic" />
+
+    <com.hasankucuk.socialtextview.SocialTextView
+        android:id="@+id/socialTextView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="This project was #developed by @hasankucuk as #opensource. \n
+hasann.kucuk@yandex.ru \n
+https://medium.com/@hasann.kucuk \n
+hasan@gmail.com \n
++1 123456789"
+        app:emailColor="#FF9E80"
+        app:hashtagColor="#82B1FF"
+        app:linkType="mention|hashtag|phone|email|url"
+        app:mentionColor="#BCBCCF"
+        app:normalTextColor="#18181F"
+        app:phoneColor="#03A9F4"
+        app:urlColor="#8BC34A" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

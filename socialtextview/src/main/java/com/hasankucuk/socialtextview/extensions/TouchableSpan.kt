@@ -6,22 +6,20 @@ import android.text.style.ClickableSpan
 import android.view.View
 
 abstract class TouchableSpan(
-    private val pressedTextColor: Int,
-    private val normalTextColor: Int,
-    private val isUnderline: Boolean
+        private val normalTextColor: Int,
+        private val pressedTextColor: Int,
+        private val isUnderline: Boolean
 ) : ClickableSpan() {
 
     private var isPressed: Boolean = false
 
-    override fun onClick(view: View) {
-    }
 
     override fun updateDrawState(paint: TextPaint) {
         super.updateDrawState(paint)
 
-        if (normalTextColor == Color.BLACK && !isUnderline)
-            return
-
+        /*     if (normalTextColor == Color.BLACK && !isUnderline)
+                 return
+             */
         val textColor = if (isPressed) pressedTextColor else normalTextColor
         paint.color = textColor
         paint.isUnderlineText = isUnderline
@@ -32,5 +30,4 @@ abstract class TouchableSpan(
     internal fun setPressed(pressed: Boolean) {
         this.isPressed = pressed
     }
-
 }

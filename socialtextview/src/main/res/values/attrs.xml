@@ -11,12 +11,12 @@
         <attr name="urlColor"/>
         <attr name="emailColor"/>
         <attr name="selectedColor"/>
-        <attr name="linkType" format="enum">
-            <enum name="hashtag" value="2"/>
-            <enum name="mention" value="4"/>
-            <enum name="url" value="8"/>
-            <enum name="email" value="16"/>
-            <enum name="phone" value="32"/>
+        <attr name="linkType" format="flags">
+            <flag name="hashtag" value="2"/>
+            <flag name="mention" value="4"/>
+            <flag name="url" value="8"/>
+            <flag name="email" value="16"/>
+            <flag name="phone" value="32"/>
         </attr>
     </declare-styleable>
 </resources>
