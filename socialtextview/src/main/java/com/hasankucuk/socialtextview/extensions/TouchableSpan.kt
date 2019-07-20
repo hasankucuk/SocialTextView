@@ -16,7 +16,6 @@ abstract class TouchableSpan(
 
     override fun updateDrawState(paint: TextPaint) {
         super.updateDrawState(paint)
-
         /*     if (normalTextColor == Color.BLACK && !isUnderline)
                  return
              */

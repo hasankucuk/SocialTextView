@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         val hashtags: MutableList<String> = arrayListOf()
         hashtags.add("#developed")
         socialTextView.setLinkedHashtag(hashtags)
-¬
+
 
         socialTextView.setLinkClickListener(object : SocialTextView.LinkClickListener {
             override fun onLinkClicked(linkType: LinkedType, matchedText: String) {
