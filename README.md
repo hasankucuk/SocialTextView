@@ -89,7 +89,8 @@ dependencies {
 
 Attribute | Type | Summary
 :---: | :---: | ---
-`app:linkType` | `int` | Sets flags for which types of links the text should show. i.e: "hashtag|mention|email|phone|url".
+`app:linkType` | `int` | hashtag|mention|url|phone|email 
+`app:underLine` | `int` | true or false
 `app:normalTextColor` | `int` | Sets the text color of a normal text color.
 `app:hashtagColor` | `color` | Sets the text color of a hashtag link in the text.
 `app:mentionColor` | `color` | Sets the text color of a mention link in the text.
