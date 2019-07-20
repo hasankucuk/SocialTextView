@@ -2,7 +2,7 @@
 A simple custom Android TextView that highlights content such as Mention, Hashtag, Phone, Email and Url.
 
 
-<img src="https://raw.githubusercontent.com/hasankucuk/SocialTextView/master/art/1.jpg"/>
+<img src="https://raw.githubusercontent.com/hasankucuk/SocialTextView/master/art/1.png"/>
 
 
 
