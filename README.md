@@ -16,10 +16,10 @@ A simple custom Android TextView that highlights content such as Mention, Hashta
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:text="This project was #developed by @hasankucuk as #opensource. \n
-hasann.kucuk@yandex.ru \n
-https://medium.com/@hasann.kucuk \n
-hasan@gmail.com \n
-+1 123456789"
+        hasann.kucuk@yandex.ru \n
+        https://medium.com/@hasann.kucuk \n
+        hasan@gmail.com \n
+        +1 123456789"
         app:emailColor="#FF9E80"
         app:hashtagColor="#82B1FF"
         app:linkType="mention|hashtag|phone|email|url"
@@ -44,7 +44,34 @@ only for linking of the hashtag you specify
         hashtags.add("#developed")
         socialTextView.setLinkedHashtag(hashtags)
 ```
+To capture click events
+```kotlin
+        socialTextView.setLinkClickListener(object : SocialTextView.LinkClickListener {
+            override fun onLinkClicked(linkType: LinkedType, matchedText: String) {
 
+                when (linkType) {
+                    TEXT -> {
+                        Toast.makeText(this@MainActivity, "You are clicked type -> TEXT and value ->$matchedText", Toast.LENGTH_SHORT).show()
+                    }
+                    HASHTAG -> {
+                        Toast.makeText(this@MainActivity, "You are clicked type -> HASHTAG and value ->$matchedText", Toast.LENGTH_SHORT).show()
+                    }
+                    MENTION -> {
+                        Toast.makeText(this@MainActivity, "You are clicked type -> MENTION and value ->$matchedText", Toast.LENGTH_SHORT).show()
+                    }
+                    URL -> {
+                        Toast.makeText(this@MainActivity, "You are clicked type -> URL and value ->$matchedText", Toast.LENGTH_SHORT).show()
+                    }
+                    EMAIL -> {
+                        Toast.makeText(this@MainActivity, "You are clicked type -> EMAIL and value ->$matchedText", Toast.LENGTH_SHORT).show()
+                    }
+                    PHONE -> {
+                        Toast.makeText(this@MainActivity, "You are clicked type -> PHONE and value ->$matchedText", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+```
 ## Setup
 ```gradle
 allprojects {
@@ -58,6 +85,19 @@ dependencies {
    implementation 'com.github.hasankucuk:SocialTextView:1.0.0'
 }
 ```
+
+
+Attribute | Type | Summary
+:---: | :---: | ---
+`app:linkType` | `int` | hashtag-mention-url-phone-email
+`app:underLine` | `int` | true or false
+`app:normalTextColor` | `int` | Sets the text color of a normal text color.
+`app:hashtagColor` | `color` | Sets the text color of a hashtag link in the text.
+`app:mentionColor` | `color` | Sets the text color of a mention link in the text.
+`app:phoneColor` | `color` | Sets the text color of a phone number link in the text.
+`app:emailColor` | `color` | Sets the text color of an email link in the text.
+`app:urlColor` | `color` | Sets the text color of a web url link in the text.
+`app:selectedColor` | `color` | Sets the text color of a selected link in the text.
 
 
 License
