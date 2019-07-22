@@ -35,32 +35,40 @@ hasan@gmail.com \n
         app:phoneColor="#03A9F4"
         app:urlColor="#8BC34A" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:paddingStart="15dp"
-        android:text="Linked example by selected 'linkType' "
-        android:textColor="@android:color/black"
-        android:textStyle="italic" />
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
 
-    <com.hasankucuk.socialtextview.SocialTextView
-        android:id="@+id/socialTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="This project was #developed by @hasankucuk as #opensource. \n
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/darker_gray"
+            android:paddingStart="15dp"
+            android:text="Linked example by selected 'linkType' "
+            android:textColor="@android:color/black"
+            android:textStyle="italic" />
+
+        <com.hasankucuk.socialtextview.SocialTextView
+            android:id="@+id/socialTextView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="This project was #developed by @hasankucuk as #opensource. \n
 hasann.kucuk@yandex.ru \n
 https://medium.com/@hasann.kucuk \n
 hasan@gmail.com \n
 +1 123456789"
-        app:emailColor="#FF9E80"
-        app:hashtagColor="#82B1FF"
-        app:linkType="mention|hashtag|phone|email|url"
-        app:mentionColor="#BCBCCF"
-        app:normalTextColor="#18181F"
-        app:phoneColor="#03A9F4"
-        app:urlColor="#8BC34A" />
+            app:emailColor="#FF9E80"
+            app:hashtagColor="#82B1FF"
+            app:linkType="mention|hashtag|phone|email|url"
+            app:mentionColor="#BCBCCF"
+            app:normalTextColor="#18181F"
+            app:phoneColor="#03A9F4"
+            app:urlColor="#8BC34A" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
