@@ -1,4 +1,10 @@
 # SocialTextView
+[![API](https://img.shields.io/badge/API-22%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=22)
+[![Android Weekly](https://img.shields.io/badge/Android%20Weekly-371-blue.svg)](http://androidweekly.net/issues/issue-371)
+[![AndroidDev Digest](https://img.shields.io/badge/AndroidDev%20Digest-%23119-yellow.svg)](https://www.androiddevdigest.com/digest-119/)
+
+
+
 A simple custom Android TextView that highlights content such as Mention, Hashtag, Phone, Email and Url.
 
 
