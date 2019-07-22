@@ -10,6 +10,19 @@ A simple custom Android TextView that highlights content such as Mention, Hashta
 <img src="https://raw.githubusercontent.com/hasankucuk/SocialTextView/master/art/1.png"/>
 
 
+## Setup
+```gradle
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+dependencies {
+   implementation 'com.github.hasankucuk:SocialTextView:1.0.0'
+}
+```
 
 ## Usage
 
@@ -77,20 +90,8 @@ To capture click events
             }
         })
 ```
-## Setup
-```gradle
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-    }
-}
 
-dependencies {
-   implementation 'com.github.hasankucuk:SocialTextView:1.0.0'
-}
-```
-
+## Attributes
 
 Attribute | Type | Summary
 :---: | :---: | ---
