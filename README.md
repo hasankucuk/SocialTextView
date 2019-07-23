@@ -1,5 +1,6 @@
 # SocialTextView
 [![API](https://img.shields.io/badge/API-22%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=22)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-hasankucuk-green.svg)](https://android-arsenal.com/details/1/7783)
 [![Android Weekly](https://img.shields.io/badge/Android%20Weekly-371-blue.svg)](http://androidweekly.net/issues/issue-371)
 
 
