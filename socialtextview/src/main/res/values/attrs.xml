@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <declare-styleable name="SocialTextView">
         <attr name="android:text"/>
         <attr name="normalTextColor"/>
@@ -17,6 +16,13 @@
             <flag name="url" value="8"/>
             <flag name="email" value="16"/>
             <flag name="phone" value="32"/>
+            <flag name="highlight" value="64"/>
         </attr>
+        <attr name="highlightRadius" format="integer"/>
+        <attr name="highlightColor" format="color"/>
+        <attr name="highlightTextColor" format="color"/>
+        <attr name="underLineColor" format="color"/>
+        <attr name="underLineWidth" format="dimension"/>
+
     </declare-styleable>
 </resources>

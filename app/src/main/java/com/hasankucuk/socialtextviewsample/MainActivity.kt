@@ -15,14 +15,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         val mentions: MutableList<String> = arrayListOf()
         mentions.add("@hasankucuk")
-        socialTextView.setLinkedMention(mentions)
+        //socialTextView.setLinkedMention(mentions)
 
         val hashtags: MutableList<String> = arrayListOf()
         hashtags.add("#developed")
-        socialTextView.setLinkedHashtag(hashtags)
+       // socialTextView.setLinkedHashtag(hashtags)
+
+        val highlightText: MutableList<String> = arrayListOf()
+        highlightText.add("project")
+        socialTextView.setHighlightText(highlightText)
 
         socialTextView.setLinkClickListener(object : SocialTextView.LinkClickListener {
             override fun onLinkClicked(linkType: LinkedType, matchedText: String) {
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                     TEXT -> {
                         Toast.makeText(this@MainActivity, "You are clicked type -> TEXT and value ->$matchedText", Toast.LENGTH_SHORT).show()
                     }
+                    HIGHLITH -> {}
                     HASHTAG -> {
                         Toast.makeText(this@MainActivity, "You are clicked type -> HASHTAG and value ->$matchedText", Toast.LENGTH_SHORT).show()
                     }

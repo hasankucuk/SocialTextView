@@ -7,7 +7,8 @@ enum class LinkedType(val value: Int) {
     MENTION(4),
     URL(8),
     EMAIL(16),
-    PHONE(32);
+    PHONE(32),
+    HIGHLITH(64);
 
     companion object {
         fun getType(value: Int) = values().firstOrNull() { it.value == value } ?: TEXT

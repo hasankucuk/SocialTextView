@@ -2,15 +2,18 @@ package com.hasankucuk.socialtextview
 
 import android.content.Context
 import android.graphics.Color
+import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.util.AttributeSet
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
 import com.hasankucuk.socialtextview.extensions.TouchableSpan
 import com.hasankucuk.socialtextview.extensions.LinkedMovement
+import com.hasankucuk.socialtextview.extensions.RoundedHighlightSpan
 import com.hasankucuk.socialtextview.model.LinkItem
 import com.hasankucuk.socialtextview.model.LinkedType
 import com.hasankucuk.socialtextview.model.LinkedType.*
@@ -21,7 +24,7 @@ import java.util.regex.Pattern
 
 
 class SocialTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, def: Int = 0) :
-        AppCompatTextView(context, attrs, def) {
+    AppCompatTextView(context, attrs, def) {
 
     private var hashtagColor = Color.BLUE
     private var mentionColor = Color.YELLOW
@@ -34,7 +37,11 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var linkedType: Int
     private var linkedMentions: List<String> = ArrayList()
     private var linkedHashtag: List<String> = ArrayList()
+    private var highlightText: List<String> = ArrayList()
     private var isLinkedMention = false
+    private var highlightRadius: Int = 8
+    private var highlightBackgroundColor = Color.YELLOW
+    private var highlightTextColor = Color.BLACK
 
 
     private var patternHashtag: Pattern? = null
@@ -67,6 +74,12 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
         selectedColor = typedArray.getColor(R.styleable.SocialTextView_selectedColor, Color.GRAY)
         isUnderline = typedArray.getBoolean(R.styleable.SocialTextView_underLine, false)
 
+        //highlight attributes
+        highlightRadius = typedArray.getInt(R.styleable.SocialTextView_highlightRadius, 8)
+        highlightBackgroundColor = typedArray.getColor(R.styleable.SocialTextView_highlightColor, Color.YELLOW)
+        highlightTextColor = typedArray.getColor(R.styleable.SocialTextView_highlightTextColor, Color.BLACK)
+
+
         linkedType = (typedArray.getInt(R.styleable.SocialTextView_linkType, LinkedType.TEXT.value))
 
         if (typedArray.hasValue(R.styleable.SocialTextView_android_text)) {
@@ -84,6 +97,17 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
         super.setHighlightColor(Color.TRANSPARENT)
     }
 
+
+    fun setLinkedList(linkedMentions: List<String>, linkedHashtag: List<String>, highlightText: List<String>) {
+
+    }
+
+    fun setHighlightText(highlightText: List<String>) {
+        this.highlightText = highlightText
+        val temp = text.toString()
+        text = ""
+        text = addSocialMediaSpan(temp)
+    }
 
     fun setLinkedMention(linkedMentions: List<String>) {
         this.linkedMentions = linkedMentions
@@ -110,14 +134,25 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
         val textSpan = SpannableString(text)
         for (item in items) {
 
-            textSpan.setSpan(object :
-                    TouchableSpan(getColorByMode(LinkedType.getType(item.mode)), selectedColor, isUnderline) {
-                override fun onClick(view: View) {
-                    //super.onClick(view)
-                    onLinkClickListener?.onLinkClicked(LinkedType.getType(item.mode), item.matched)
 
-                }
-            }, item.start, item.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            if (item.mode == HIGHLITH.value) {
+                textSpan.setSpan(
+                    RoundedHighlightSpan(highlightRadius, highlightBackgroundColor, highlightTextColor),
+                    item.start,
+                    item.end,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            } else {
+                textSpan.setSpan(object :
+                    TouchableSpan(getColorByMode(LinkedType.getType(item.mode)), selectedColor, isUnderline) {
+                    override fun onClick(view: View) {
+                        //super.onClick(view)
+                        onLinkClickListener?.onLinkClicked(LinkedType.getType(item.mode), item.matched)
+
+                    }
+                }, item.start, item.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            }
         }
         return textSpan
     }
@@ -157,6 +192,14 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (linkedType and PHONE.value == PHONE.value) {
             linkedText = collectLinkItems(PHONE.value, items, Patterns.PHONE.matcher(linkedText), linkedText)
         }
+        if (linkedType and HIGHLITH.value == HIGHLITH.value) {
+            for (item in highlightText) {
+                val start = linkedText.indexOf(item)
+                items.add(
+                    LinkItem(item, start, start + item.length, HIGHLITH.value)
+                )
+            }
+        }
 
         collectLinkItems(TEXT.value, items, standartText!!.matcher(linkedText), linkedText)
 
@@ -176,7 +219,7 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
         get() {
             if (patternLink == null) {
                 patternLink = Pattern.compile(
-                        "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,25})?\\@)?)?((?:(?:[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}\\.)+(?:(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])|(?:biz|b[abdefghijmnorstvwyz])|(?:cat|com|coop|c[acdfghiklmnoruvxyz])|d[ejkmoz]|(?:edu|e[cegrstu])|f[ijkmor]|(?:gov|g[abdefghilmnpqrstuwy])|h[kmnrtu]|(?:info|int|i[delmnoqrst])|(?:jobs|j[emop])|k[eghimnrwyz]|l[abcikrstuvy]|(?:mil|mobi|museum|m[acdghklmnopqrstuvwxyz])|(?:name|net|n[acefgilopruz])|(?:org|om)|(?:pro|p[aefghklmnrstwy])|qa|r[eouw]|s[abcdeghijklmnortuvyz]|(?:tel|travel|t[cdfghjklmnoprtvwz])|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw]))|(?:(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])))(?:\\:\\d{1,5})?)(\\/(?:(?:[a-zA-Z0-9\\;\\/\\?\\:\\@\\&\\=\\#\\~\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%[a-fA-F0-9]{2}))*)?(?:\\b|$)"
+                    "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,25})?\\@)?)?((?:(?:[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}\\.)+(?:(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])|(?:biz|b[abdefghijmnorstvwyz])|(?:cat|com|coop|c[acdfghiklmnoruvxyz])|d[ejkmoz]|(?:edu|e[cegrstu])|f[ijkmor]|(?:gov|g[abdefghilmnpqrstuwy])|h[kmnrtu]|(?:info|int|i[delmnoqrst])|(?:jobs|j[emop])|k[eghimnrwyz]|l[abcikrstuvy]|(?:mil|mobi|museum|m[acdghklmnopqrstuvwxyz])|(?:name|net|n[acefgilopruz])|(?:org|om)|(?:pro|p[aefghklmnrstwy])|qa|r[eouw]|s[abcdeghijklmnortuvyz]|(?:tel|travel|t[cdfghjklmnoprtvwz])|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw]))|(?:(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])))(?:\\:\\d{1,5})?)(\\/(?:(?:[a-zA-Z0-9\\;\\/\\?\\:\\@\\&\\=\\#\\~\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%[a-fA-F0-9]{2}))*)?(?:\\b|$)"
                 )
             }
             return patternLink
@@ -199,9 +242,9 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
     private fun collectLinkItems(
-            mode: Int, items: MutableCollection<LinkItem>,
-            matcher: Matcher,
-            text: String
+        mode: Int, items: MutableCollection<LinkItem>,
+        matcher: Matcher,
+        text: String
     ): String {
         var text = text
         while (matcher.find()) {
@@ -215,7 +258,8 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             if (mode == HASHTAG.value && linkedHashtag.isNotEmpty()) {
                 if (linkedHashtag.contains(matchedText)) {
-                    items.add(LinkItem(matchedText, matcherStart, matcher.end(), mode)
+                    items.add(
+                        LinkItem(matchedText, matcherStart, matcher.end(), mode)
                     )
 
                 }
@@ -223,14 +267,14 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
             } else if (mode == MENTION.value && linkedMentions.isNotEmpty()) {
                 if (linkedMentions.contains(matchedText)) {
                     items.add(
-                            LinkItem(matchedText, matcherStart, matcher.end(), mode)
+                        LinkItem(matchedText, matcherStart, matcher.end(), mode)
                     )
 
                 }
 
             } else {
                 items.add(
-                        LinkItem(matchedText, matcherStart, matcher.end(), mode)
+                    LinkItem(matchedText, matcherStart, matcher.end(), mode)
                 )
 
             }

@@ -3,7 +3,6 @@ package com.hasankucuk.socialtextview.extensions
 import android.graphics.Color
 import android.text.TextPaint
 import android.text.style.ClickableSpan
-import android.view.View
 
 abstract class TouchableSpan(
         private val normalTextColor: Int,
