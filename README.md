@@ -1,10 +1,29 @@
 # SocialTextView
+[![API](https://img.shields.io/badge/API-22%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=22)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-hasankucuk-green.svg)](https://android-arsenal.com/details/1/7783)
+[![Android Weekly](https://img.shields.io/badge/Android%20Weekly-371-blue.svg)](http://androidweekly.net/issues/issue-371)
+
+
+
 A simple custom Android TextView that highlights content such as Mention, Hashtag, Phone, Email and Url.
 
 
 <img src="https://raw.githubusercontent.com/hasankucuk/SocialTextView/master/art/1.png"/>
 
 
+## Setup
+```gradle
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+dependencies {
+   implementation 'com.github.hasankucuk:SocialTextView:1.0.0'
+}
+```
 
 ## Usage
 
@@ -72,20 +91,8 @@ To capture click events
             }
         })
 ```
-## Setup
-```gradle
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-    }
-}
 
-dependencies {
-   implementation 'com.github.hasankucuk:SocialTextView:1.0.0'
-}
-```
-
+## Attributes
 
 Attribute | Type | Summary
 :---: | :---: | ---
