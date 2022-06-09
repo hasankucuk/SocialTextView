@@ -17,7 +17,11 @@ class LinkedMovement : LinkMovementMethod() {
                 pressedSpan = getTouchedSpan(widget, buffer, event)
                 if (pressedSpan != null) {
                     pressedSpan!!.setPressed(true)
-                    Selection.setSelection(buffer, buffer.getSpanStart(pressedSpan), buffer.getSpanEnd(pressedSpan))
+                    Selection.setSelection(
+                        buffer,
+                        buffer.getSpanStart(pressedSpan),
+                        buffer.getSpanEnd(pressedSpan)
+                    )
                 }
             }
 

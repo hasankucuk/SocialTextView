@@ -13,7 +13,5 @@ enum class LinkedType(val value: Int) {
     companion object {
         fun getType(value: Int) = values().firstOrNull() { it.value == value } ?: TEXT
     }
-
-
 }
 
