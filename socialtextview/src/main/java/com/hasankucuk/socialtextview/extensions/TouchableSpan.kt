@@ -5,9 +5,9 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 
 abstract class TouchableSpan(
-        private val normalTextColor: Int,
-        private val pressedTextColor: Int,
-        private val isUnderline: Boolean
+    private val normalTextColor: Int,
+    private val pressedTextColor: Int,
+    private val isUnderline: Boolean
 ) : ClickableSpan() {
 
     private var isPressed: Boolean = false

@@ -38,7 +38,12 @@ class RoundedHighlightSpan(
         bottom: Int,
         paint: Paint
     ) {
-        val rectF = RectF(left, top.toFloat(), left + measureTextPaint(paint, text, start, end), bottom.toFloat())
+        val rectF = RectF(
+            left,
+            top.toFloat(),
+            left + measureTextPaint(paint, text, start, end),
+            bottom.toFloat()
+        )
         paint.color = backgroundColor
         canvas.drawRoundRect(rectF, HIGHLIGHT_RADIUS.toFloat(), HIGHLIGHT_RADIUS.toFloat(), paint)
         paint.color = textColor
@@ -46,7 +51,12 @@ class RoundedHighlightSpan(
     }
 
 
-    private fun measureTextPaint(paint: Paint, charSequence: CharSequence?, start: Int, end: Int): Float {
+    private fun measureTextPaint(
+        paint: Paint,
+        charSequence: CharSequence?,
+        start: Int,
+        end: Int
+    ): Float {
         return paint.measureText(charSequence, start, end)
     }
 

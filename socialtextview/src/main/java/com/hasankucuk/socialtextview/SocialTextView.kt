@@ -6,24 +6,25 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.util.AttributeSet
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
-import com.hasankucuk.socialtextview.extensions.TouchableSpan
 import com.hasankucuk.socialtextview.extensions.LinkedMovement
 import com.hasankucuk.socialtextview.extensions.RoundedHighlightSpan
+import com.hasankucuk.socialtextview.extensions.TouchableSpan
 import com.hasankucuk.socialtextview.model.LinkItem
 import com.hasankucuk.socialtextview.model.LinkedType
 import com.hasankucuk.socialtextview.model.LinkedType.*
-import java.util.ArrayList
-import java.util.HashSet
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
-class SocialTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, def: Int = 0) :
+class SocialTextView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    def: Int = 0
+) :
     AppCompatTextView(context, attrs, def) {
 
     private var hashtagColor = Color.BLUE
@@ -63,21 +64,34 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
     init {
         movementMethod = LinkedMovement.getInstance()
 
-        val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.SocialTextView, def, def)
+        val typedArray =
+            context.theme.obtainStyledAttributes(attrs, R.styleable.SocialTextView, def, def)
 
-        hashtagColor = typedArray.getColor(R.styleable.SocialTextView_hashtagColor, Color.parseColor("#82B1FF"))
-        mentionColor = typedArray.getColor(R.styleable.SocialTextView_mentionColor, Color.parseColor("#BCBCCF"))
-        emailColor = typedArray.getColor(R.styleable.SocialTextView_emailColor, Color.parseColor("#FF9E80"))
-        urlColor = typedArray.getColor(R.styleable.SocialTextView_urlColor, Color.parseColor("#8BC34A"))
-        phoneColor = typedArray.getColor(R.styleable.SocialTextView_phoneColor, Color.parseColor("#03A9F4"))
-        normalTextColor = typedArray.getColor(R.styleable.SocialTextView_normalTextColor, Color.BLACK)
+        hashtagColor = typedArray.getColor(
+            R.styleable.SocialTextView_hashtagColor,
+            Color.parseColor("#82B1FF")
+        )
+        mentionColor = typedArray.getColor(
+            R.styleable.SocialTextView_mentionColor,
+            Color.parseColor("#BCBCCF")
+        )
+        emailColor =
+            typedArray.getColor(R.styleable.SocialTextView_emailColor, Color.parseColor("#FF9E80"))
+        urlColor =
+            typedArray.getColor(R.styleable.SocialTextView_urlColor, Color.parseColor("#8BC34A"))
+        phoneColor =
+            typedArray.getColor(R.styleable.SocialTextView_phoneColor, Color.parseColor("#03A9F4"))
+        normalTextColor =
+            typedArray.getColor(R.styleable.SocialTextView_normalTextColor, Color.BLACK)
         selectedColor = typedArray.getColor(R.styleable.SocialTextView_selectedColor, Color.GRAY)
         isUnderline = typedArray.getBoolean(R.styleable.SocialTextView_underLine, false)
 
         //highlight attributes
         highlightRadius = typedArray.getInt(R.styleable.SocialTextView_highlightRadius, 8)
-        highlightBackgroundColor = typedArray.getColor(R.styleable.SocialTextView_highlightColor, Color.YELLOW)
-        highlightTextColor = typedArray.getColor(R.styleable.SocialTextView_highlightTextColor, Color.BLACK)
+        highlightBackgroundColor =
+            typedArray.getColor(R.styleable.SocialTextView_highlightColor, Color.YELLOW)
+        highlightTextColor =
+            typedArray.getColor(R.styleable.SocialTextView_highlightTextColor, Color.BLACK)
 
 
         linkedType = (typedArray.getInt(R.styleable.SocialTextView_linkType, LinkedType.TEXT.value))
@@ -98,7 +112,11 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
 
-    fun setLinkedList(linkedMentions: List<String>, linkedHashtag: List<String>, highlightText: List<String>) {
+    fun setLinkedList(
+        linkedMentions: List<String>,
+        linkedHashtag: List<String>,
+        highlightText: List<String>
+    ) {
 
     }
 
@@ -137,17 +155,28 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             if (item.mode == HIGHLITH.value) {
                 textSpan.setSpan(
-                    RoundedHighlightSpan(highlightRadius, highlightBackgroundColor, highlightTextColor),
+                    RoundedHighlightSpan(
+                        highlightRadius,
+                        highlightBackgroundColor,
+                        highlightTextColor
+                    ),
                     item.start,
                     item.end,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             } else {
                 textSpan.setSpan(object :
-                    TouchableSpan(getColorByMode(LinkedType.getType(item.mode)), selectedColor, isUnderline) {
+                    TouchableSpan(
+                        getColorByMode(LinkedType.getType(item.mode)),
+                        selectedColor,
+                        isUnderline
+                    ) {
                     override fun onClick(view: View) {
                         //super.onClick(view)
-                        onLinkClickListener?.onLinkClicked(LinkedType.getType(item.mode), item.matched)
+                        onLinkClickListener?.onLinkClicked(
+                            LinkedType.getType(item.mode),
+                            item.matched
+                        )
 
                     }
                 }, item.start, item.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -175,22 +204,39 @@ class SocialTextView @JvmOverloads constructor(context: Context, attrs: Attribut
         var linkedText: String = text
 
         if (linkedType and EMAIL.value == EMAIL.value) {
-            linkedText = collectLinkItems(EMAIL.value, items, Patterns.EMAIL_ADDRESS.matcher(linkedText), linkedText)
+            linkedText = collectLinkItems(
+                EMAIL.value,
+                items,
+                Patterns.EMAIL_ADDRESS.matcher(linkedText),
+                linkedText
+            )
         }
 
         if (linkedType and URL.value == URL.value) {
-            linkedText = collectLinkItems(URL.value, items, linkPattern!!.matcher(linkedText), linkedText)
+            linkedText =
+                collectLinkItems(URL.value, items, linkPattern!!.matcher(linkedText), linkedText)
         }
 
         if (linkedType and HASHTAG.value == HASHTAG.value) {
-            linkedText = collectLinkItems(HASHTAG.value, items, hashtagPattern.matcher(linkedText), linkedText)
+            linkedText = collectLinkItems(
+                HASHTAG.value,
+                items,
+                hashtagPattern.matcher(linkedText),
+                linkedText
+            )
         }
         if (linkedType and MENTION.value == MENTION.value) {
-            linkedText = collectLinkItems(MENTION.value, items, mentionPattern!!.matcher(linkedText), linkedText)
+            linkedText = collectLinkItems(
+                MENTION.value,
+                items,
+                mentionPattern!!.matcher(linkedText),
+                linkedText
+            )
         }
 
         if (linkedType and PHONE.value == PHONE.value) {
-            linkedText = collectLinkItems(PHONE.value, items, Patterns.PHONE.matcher(linkedText), linkedText)
+            linkedText =
+                collectLinkItems(PHONE.value, items, Patterns.PHONE.matcher(linkedText), linkedText)
         }
         if (linkedType and HIGHLITH.value == HIGHLITH.value) {
             for (item in highlightText) {
